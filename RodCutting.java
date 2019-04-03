@@ -5,12 +5,47 @@ public class RodCutting {
 
   // Do not change the parameters!
   public int rodCuttingRecur(int rodLength, int[] lengthPrices) {
-    return 0;
+	  int [] memBest = new int[rodLength];
+	  int best = rodCuttingMoization(rodLength, lengthPrices, memBest);
+	  
+    return best;
   }
+  
+public int rodCuttingMoization(int rodLength, int[] lengthPrices,int[] memBest) {
+	  
+	  if(rodLength == 1)
+		  return lengthPrices[0];
+	  
+	  if(memBest[rodLength-1] != 0)
+		  return memBest[rodLength-1];
+	  
+	  int best = lengthPrices[rodLength-1];
+	  
+	  for(int i = 1; i  <= rodLength/2; i++)
+	  {
+		  int cutA = rodCuttingMoization(i, lengthPrices, memBest);
+		  int cutB = rodCuttingMoization(rodLength-i, lengthPrices, memBest);
+		  int totValueFromCuts = cutA + cutB;
+		  best = Math.max(totValueFromCuts, best);
+	  }
+	  memBest[rodLength-1] = best;
+    return best;
+}
 
   // Do not change the parameters!
   public int rodCuttingBottomUp(int rodLength, int[] lengthPrices) {
-    return 0;
+	int [] memBest = new int[rodLength+1];
+	memBest[1] = lengthPrices[0];
+	for(int i = 1; i <= rodLength; i++)
+	{
+		int best=lengthPrices[i-1];
+		for(int j = 1; j <= i; j++)
+		{	
+			best = Math.max(best, memBest[j] + memBest[(i-j)]);
+		}
+		memBest[i] = best;
+	}
+    return memBest[rodLength];
   }
 
 
