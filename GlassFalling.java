@@ -1,7 +1,4 @@
-import java.awt.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Queue;
+
 
 /**
  * Glass Falling
@@ -62,7 +59,8 @@ public class GlassFalling {
   // Do not change the parameters!
   public int glassFallingBottomUp(int floors, int sheets) {
 	  int[][] mem = new int[floors+1][sheets+1];
-	  
+	  if(mem[floors][sheets] != 0)
+		  return mem[floors][sheets];
 	  for(int i = 1; i <= floors; i++)
 	  {
 		  for(int j = 1; j <= sheets; j++)
